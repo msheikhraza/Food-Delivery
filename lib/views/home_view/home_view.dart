@@ -11,9 +11,10 @@ class _HomeViewsState extends State<HomeViews> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 20), (result) {
+    Timer.periodic(const Duration(seconds: 5), (result) {
       Provider.of<GoogleMapProvider>(context, listen: false)
           .getcureentuser(context);
+
     });
   }
 
@@ -31,7 +32,7 @@ class _HomeViewsState extends State<HomeViews> {
               elevation: 2,
               child: Center(
                 child: SizedBox(
-                  height: 20 * height,
+                  height: 23 * height,
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Column(
@@ -52,6 +53,7 @@ class _HomeViewsState extends State<HomeViews> {
                         ),
                         appButton(
                             voidCallback: () {
+
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => TrackingView()));
                             },

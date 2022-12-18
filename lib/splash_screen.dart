@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:truckappp/provider/google_map_provider.dart';
 import 'package:truckappp/utils/app_images_strings.dart';
 import 'package:truckappp/views/home_view/bottom_menu.dart';
-import 'package:truckappp/views/home_view/home_imports.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,6 +16,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<GoogleMapProvider>(context, listen: false)
+          .getcureentuser(context);
+    });
+
     Navigate();
   }
 

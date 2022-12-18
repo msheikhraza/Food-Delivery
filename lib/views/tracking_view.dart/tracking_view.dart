@@ -2,20 +2,12 @@ part of 'tracking_imports.dart';
 
 class TrackingView extends StatefulWidget {
   TrackingView({super.key});
-  static final LatLng _kMapCenter =
-      LatLng(25.197340856093597, 55.27441242012923);
-
-  static final CameraPosition _kInitialPosition =
-      CameraPosition(target: _kMapCenter, zoom: 12.0, tilt: 0, bearing: 0);
-
   @override
   State<TrackingView> createState() => _TrackingViewState();
 }
 
 class _TrackingViewState extends State<TrackingView> {
   GoogleMapController? mapController;
-
-  final Set<Marker> markers = Set();
 
   @override
   void dispose() {
@@ -24,20 +16,33 @@ class _TrackingViewState extends State<TrackingView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 5), (result) {
+      Provider.of<GoogleMapProvider>(context, listen: false)
+          .getcureentuser(context);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(body: Consumer<GoogleMapProvider>(
       builder: (context, value, child) {
         return GoogleMap(
+          onMapCreated: (GoogleMapController controller) async {
+            value.completer.complete(controller);
+          },
+          polylines: value.polyline,
           initialCameraPosition: CameraPosition(
               target: LatLng(
                 double.parse(value.position!.latitude.toString()),
                 double.parse(value.position!.latitude.toString()),
               ),
-              zoom: 15),
+              zoom: 5),
           mapType: MapType.normal,
           zoomControlsEnabled: false,
           markers: value.markers,
-          myLocationEnabled: false,
+          myLocationEnabled: true,
         );
       },
     ));
