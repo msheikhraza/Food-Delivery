@@ -9,8 +9,13 @@ class PopularItemsViews extends StatelessWidget {
     double width = MediaQuery.of(context).size.width / 100;
 
     return Scaffold(
+      appBar: AppBar(title: Text("Most Popular items",style: TextStyle(color: Colors.black),),
+      elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+      ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 50, right: 10),
+        padding: const EdgeInsets.only(left: 10, top: 20, right: 10),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,

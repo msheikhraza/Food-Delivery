@@ -8,6 +8,7 @@ class HomeViews extends StatefulWidget {
 }
 
 class _HomeViewsState extends State<HomeViews> {
+
   @override
   void initState() {
     super.initState();
@@ -51,13 +52,16 @@ class _HomeViewsState extends State<HomeViews> {
                         const SizedBox(
                           height: 20,
                         ),
-                        appButton(
+                      Consumer<GoogleMapProvider>(builder: (_,v,__){
+                        return         appButton(
                             voidCallback: () {
-
+v.animateTo(v.position!.latitude, v.position!.longitude);
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => TrackingView()));
+                                  builder: (_) => Prepration()));
                             },
-                            title: AppStrings.app__trackString)
+                            title: AppStrings.app__trackString);
+
+                      },)
                       ],
                     ),
                   ),

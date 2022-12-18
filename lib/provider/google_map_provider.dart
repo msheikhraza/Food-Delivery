@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 import 'package:geolocator/geolocator.dart' as geo;
+import 'package:location/location.dart' as loc;
+
 
 class GoogleMapProvider extends ChangeNotifier {
   BitmapDescriptor? caricon, currenteventlocation;
@@ -16,15 +15,20 @@ class GoogleMapProvider extends ChangeNotifier {
   final Set<Polyline> polyline = {};
   String point = "";
   String distance = "";
-
   final Set<Marker> markers = new Set();
-  Completer<GoogleMapController> completer = Completer();
-
+     final Completer<GoogleMapController> completer = Completer();
   Future<void> animateTo(double lat, double lng) async {
     final c = await completer.future;
-    final p = CameraPosition(target: LatLng(lat, lng), zoom: 14.4746);
-    c.animateCamera(CameraUpdate.newCameraPosition(p));
+
+
+    c.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(lat, lng), zoom: 14.4746)));
+    c.moveCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(lat, lng), zoom: 14.4746)));
+    notifyListeners();
+
   }
+
   void getcureentuser(BuildContext context) async {
     geo.LocationPermission permission;
     permission = await geo.Geolocator.requestPermission();
